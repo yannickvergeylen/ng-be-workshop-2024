@@ -29,12 +29,12 @@
             "label": "api"
           },
           {
-            "value": "test",
-            "label": "test"
-          },
-          {
             "value": "movies",
             "label": "movies"
+          },
+          {
+            "value": "video-games",
+            "label": "video-games"
           },
           {
             "value": "shared",
