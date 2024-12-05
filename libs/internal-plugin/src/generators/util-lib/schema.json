@@ -25,20 +25,24 @@
         "type": "list",
         "items": [
           {
-            "value": "movies"
+            "value": "api",
+            "label": "api"
           },
           {
-            "value": "api"
+            "value": "test",
+            "label": "test"
           },
           {
-            "value": "shared"
+            "value": "movies",
+            "label": "movies"
+          },
+          {
+            "value": "shared",
+            "label": "shared"
           }
         ]
       }
     }
   },
-  "required": [
-    "name",
-    "directory"
-  ]
+  "required": ["name", "directory"]
 }

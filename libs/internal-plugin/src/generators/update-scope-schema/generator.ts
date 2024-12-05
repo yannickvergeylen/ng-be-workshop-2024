@@ -6,11 +6,26 @@ async function updateScopeSchemaGenerator(tree: Tree) {
   updateJson(tree, `${projects.get('internal-plugin').sourceRoot}/generators/util-lib/schema.json`, (json) => {
     json.properties.directory['x-prompt'].items = scopes.map((scope) => ({
       value: scope,
-      label: scope,
+      label: scope
     }));
     return json;
   });
+  const schemaDTSPath = `${projects.get('internal-plugin').sourceRoot}/generators/util-lib/schema.d.ts`;
+  const schemaDTS = tree.read(schemaDTSPath).toString();
+  tree.write(schemaDTSPath, replaceScopes(schemaDTS, scopes));
   await formatFiles(tree);
+}
+
+function replaceScopes(content: string, scopes: string[]): string {
+  const joinScopes = scopes.map((s) => `'${s}'`).join(' | ');
+  const PATTERN = /interface UtilLibGeneratorSchema \{\n.*\n.*\n\}/gm;
+  return content.replace(
+    PATTERN,
+    `interface UtilLibGeneratorSchema {
+  name: string;
+  directory: ${joinScopes};
+}`
+  );
 }
 
 function getScopes(projectMap: Map<string, ProjectConfiguration>) {
