@@ -1,6 +1,6 @@
 import { formatFiles, getProjects, ProjectConfiguration, Tree, updateJson } from '@nx/devkit';
 
-async function updateScopeSchemaGenerator(tree: Tree) {
+export async function updateScopeSchemaGenerator(tree: Tree) {
   const projects = getProjects(tree);
   const scopes = getScopes(projects);
   updateJson(tree, `${projects.get('internal-plugin').sourceRoot}/generators/util-lib/schema.json`, (json) => {
@@ -42,5 +42,3 @@ function getScopes(projectMap: Map<string, ProjectConfiguration>) {
   // remove duplicates
   return Array.from(new Set(allScopes));
 }
-
-export default updateScopeSchemaGenerator;
