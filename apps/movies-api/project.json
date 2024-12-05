@@ -13,7 +13,7 @@
             "apps/movies-api/src/fly.toml",
             "apps/movies-api/src/Dockerfile",
             "apps/movies-api/src/.dockerignore",
-            "apps/movies-api/.local.env"
+            "apps/movies-api/src/.local.env"
           ],
           "externalDependencies": [
             "@nestjs/microservices",
@@ -23,6 +23,12 @@
             "class-validator",
             "cache-manager",
             "cache-manager/package.json"
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/movies-app/src/environments/environment.ts",
+              "with": "apps/movies-app/src/environments/environment.prod.ts"
+            }
           ]
         }
       }
@@ -50,6 +56,15 @@
       "options": {
         "jestConfig": "apps/movies-api/jest.config.ts"
       }
+    },
+    "deploy": {
+      "executor": "@nx-workshop/internal-plugin:fly-deploy",
+      "outputs": [],
+      "options": {
+        "dist": "dist/apps/movies-api",
+        "name": "yannicks-awesome-api"
+      },
+      "dependsOn": [{ "target": "build", "projects": "self", "params": "forward" }]
     }
   }
 }
