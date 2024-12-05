@@ -6,15 +6,15 @@ module.exports = [
     // Override or add rules here
     rules: {},
     languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
+      parser: require('jsonc-eslint-parser')
+    }
   },
 
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    ignores: ['**/dist'],
+    ignores: ['**/dist']
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -27,11 +27,15 @@ module.exports = [
           depConstraints: [
             {
               sourceTag: 'scope:movies',
-              onlyDependOnLibsWithTags: ['scope:movies', 'scope:shared'],
+              onlyDependOnLibsWithTags: ['scope:movies', 'scope:shared']
+            },
+            {
+              sourceTag: 'scope:api',
+              onlyDependOnLibsWithTags: ['scope:api', 'scope:shared']
             },
             {
               sourceTag: 'scope:shared',
-              onlyDependOnLibsWithTags: ['scope:shared'],
+              onlyDependOnLibsWithTags: ['scope:shared']
             },
             {
               sourceTag: 'type:feature',
@@ -39,28 +43,28 @@ module.exports = [
                 'type:feature',
                 'type:data-access',
                 'type:ui',
-                'type:util',
-              ],
+                'type:util'
+              ]
             },
             {
               sourceTag: 'type:data-access',
-              onlyDependOnLibsWithTags: ['type:data-access', 'type:util'],
+              onlyDependOnLibsWithTags: ['type:data-access', 'type:util']
             },
             {
               sourceTag: 'type:ui',
-              onlyDependOnLibsWithTags: ['type:ui', 'type:util'],
+              onlyDependOnLibsWithTags: ['type:ui', 'type:util']
             },
             {
               sourceTag: 'type:util',
-              onlyDependOnLibsWithTags: ['type:util'],
-            },
-          ],
-        },
-      ],
-    },
+              onlyDependOnLibsWithTags: ['type:util']
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    rules: {},
-  },
+    rules: {}
+  }
 ];
