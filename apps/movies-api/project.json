@@ -3,12 +3,45 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/movies-api/src",
   "projectType": "application",
-  "tags": ["type:api", "scope:api"],
+  "tags": [
+    "type:api",
+    "scope:api"
+  ],
   "targets": {
+    "build": {
+      "configurations": {
+        "production": {
+          "assets": [
+            "apps/movies-api/src/assets",
+            "apps/movies-api/src/fly.toml",
+            "apps/movies-api/src/Dockerfile",
+            "apps/movies-api/src/.dockerignore",
+            "apps/movies-api/src/.local.env"
+          ],
+          "externalDependencies": [
+            "@nestjs/microservices",
+            "@nestjs/microservices/microservices-module",
+            "@nestjs/websockets/socket-module",
+            "class-transformer",
+            "class-validator",
+            "cache-manager",
+            "cache-manager/package.json"
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/movies-app/src/environments/environment.ts",
+              "with": "apps/movies-app/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "buildTarget": "movies-api:build",
         "runBuildTargetDependencies": false
@@ -24,10 +57,28 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/movies-api/jest.config.ts"
       }
+    },
+    "deploy": {
+      "executor": "@nx-workshop/internal-plugin:fly-deploy",
+      "outputs": [],
+      "inputs": [
+        {
+          "runtime": "fly version"
+        }
+      ],
+      "options": {
+        "dist": "dist/apps/movies-api",
+        "name": "yannicks-awesome-api"
+      },
+      "dependsOn": [
+        "build"
+      ]
     }
   }
 }
