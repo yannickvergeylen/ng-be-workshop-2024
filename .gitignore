@@ -43,4 +43,6 @@ Thumbs.db
 
 .angular
 
+.local.env
+
 vite.config.*.timestamp*
