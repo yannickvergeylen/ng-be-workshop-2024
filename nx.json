@@ -35,7 +35,17 @@
       "options": { "passWithNoTests": true },
       "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     },
-    "e2e-ci--**/*": { "dependsOn": ["^build"] }
+    "e2e-ci--**/*": { "dependsOn": ["^build"] },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@angular-devkit/build-angular:browser": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
   },
   "plugins": [
     { "plugin": "@nx/playwright/plugin", "options": { "targetName": "e2e" } },
@@ -64,8 +74,14 @@
       "style": "css",
       "unitTestRunner": "jest"
     },
-    "@nx/angular:library": { "linter": "eslint", "unitTestRunner": "jest" },
-    "@nx/angular:component": { "style": "css" }
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "style": "css"
+    }
   },
-  "nxCloudId": "6751b892ba225672008b5c34"
+  "nxCloudId": "6751b892ba225672008b5c34",
+  "defaultProject": "movies-app"
 }
